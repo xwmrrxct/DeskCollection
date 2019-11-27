@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		301CACFD238E71A200FBA274 /* TaigaAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 301CACFC238E71A200FBA274 /* TaigaAnimatedTransitioning.m */; };
+		301CAD00238E72AE00FBA274 /* TaigaInteractiveTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 301CACFF238E72AD00FBA274 /* TaigaInteractiveTransitioning.m */; };
 		3045879F238D1327003A0A73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3045879E238D1327003A0A73 /* AppDelegate.m */; };
 		304587A2238D1327003A0A73 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587A1238D1327003A0A73 /* SceneDelegate.m */; };
 		304587A5238D1327003A0A73 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587A4238D1327003A0A73 /* ViewController.m */; };
@@ -17,6 +19,9 @@
 		304587B3238D132B003A0A73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587B2238D132B003A0A73 /* main.m */; };
 		304587BD238D132B003A0A73 /* DeskCollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587BC238D132B003A0A73 /* DeskCollectionTests.m */; };
 		304587C8238D132B003A0A73 /* DeskCollectionUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587C7238D132B003A0A73 /* DeskCollectionUITests.m */; };
+		304587DA238D14D4003A0A73 /* DeskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587D9238D14D4003A0A73 /* DeskViewController.m */; };
+		304587E2238D1AA2003A0A73 /* TaigaSuspendedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587E1238D1AA2003A0A73 /* TaigaSuspendedView.m */; };
+		304587E5238D2092003A0A73 /* TaigaSuspendedEntrance.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587E4238D2092003A0A73 /* TaigaSuspendedEntrance.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		301CACFB238E71A200FBA274 /* TaigaAnimatedTransitioning.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaigaAnimatedTransitioning.h; sourceTree = "<group>"; };
+		301CACFC238E71A200FBA274 /* TaigaAnimatedTransitioning.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaigaAnimatedTransitioning.m; sourceTree = "<group>"; };
+		301CACFE238E72AD00FBA274 /* TaigaInteractiveTransitioning.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaigaInteractiveTransitioning.h; sourceTree = "<group>"; };
+		301CACFF238E72AD00FBA274 /* TaigaInteractiveTransitioning.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaigaInteractiveTransitioning.m; sourceTree = "<group>"; };
 		3045879A238D1327003A0A73 /* DeskCollection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeskCollection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3045879D238D1327003A0A73 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3045879E238D1327003A0A73 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -56,6 +65,12 @@
 		304587C3238D132B003A0A73 /* DeskCollectionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DeskCollectionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		304587C7238D132B003A0A73 /* DeskCollectionUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeskCollectionUITests.m; sourceTree = "<group>"; };
 		304587C9238D132B003A0A73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		304587D8238D14D4003A0A73 /* DeskViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeskViewController.h; sourceTree = "<group>"; };
+		304587D9238D14D4003A0A73 /* DeskViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeskViewController.m; sourceTree = "<group>"; };
+		304587E0238D1AA2003A0A73 /* TaigaSuspendedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaigaSuspendedView.h; sourceTree = "<group>"; };
+		304587E1238D1AA2003A0A73 /* TaigaSuspendedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaigaSuspendedView.m; sourceTree = "<group>"; };
+		304587E3238D2092003A0A73 /* TaigaSuspendedEntrance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaigaSuspendedEntrance.h; sourceTree = "<group>"; };
+		304587E4238D2092003A0A73 /* TaigaSuspendedEntrance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaigaSuspendedEntrance.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +98,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		301CACF7238E67F200FBA274 /* TaigaSVTransitioning */ = {
+			isa = PBXGroup;
+			children = (
+				301CACFB238E71A200FBA274 /* TaigaAnimatedTransitioning.h */,
+				301CACFC238E71A200FBA274 /* TaigaAnimatedTransitioning.m */,
+				301CACFE238E72AD00FBA274 /* TaigaInteractiveTransitioning.h */,
+				301CACFF238E72AD00FBA274 /* TaigaInteractiveTransitioning.m */,
+			);
+			path = TaigaSVTransitioning;
+			sourceTree = "<group>";
+		};
 		30458791238D1327003A0A73 = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +138,8 @@
 				304587A1238D1327003A0A73 /* SceneDelegate.m */,
 				304587A3238D1327003A0A73 /* ViewController.h */,
 				304587A4238D1327003A0A73 /* ViewController.m */,
+				304587D6238D14B5003A0A73 /* BusinessCodes */,
+				304587D7238D14B5003A0A73 /* Customs */,
 				304587A6238D1327003A0A73 /* Main.storyboard */,
 				304587AC238D132A003A0A73 /* Assets.xcassets */,
 				304587AE238D132A003A0A73 /* LaunchScreen.storyboard */,
@@ -138,6 +166,35 @@
 				304587C9238D132B003A0A73 /* Info.plist */,
 			);
 			path = DeskCollectionUITests;
+			sourceTree = "<group>";
+		};
+		304587D6238D14B5003A0A73 /* BusinessCodes */ = {
+			isa = PBXGroup;
+			children = (
+				304587D8238D14D4003A0A73 /* DeskViewController.h */,
+				304587D9238D14D4003A0A73 /* DeskViewController.m */,
+			);
+			path = BusinessCodes;
+			sourceTree = "<group>";
+		};
+		304587D7238D14B5003A0A73 /* Customs */ = {
+			isa = PBXGroup;
+			children = (
+				304587DF238D1A96003A0A73 /* TaigaSuspendedView */,
+			);
+			path = Customs;
+			sourceTree = "<group>";
+		};
+		304587DF238D1A96003A0A73 /* TaigaSuspendedView */ = {
+			isa = PBXGroup;
+			children = (
+				301CACF7238E67F200FBA274 /* TaigaSVTransitioning */,
+				304587E0238D1AA2003A0A73 /* TaigaSuspendedView.h */,
+				304587E1238D1AA2003A0A73 /* TaigaSuspendedView.m */,
+				304587E3238D2092003A0A73 /* TaigaSuspendedEntrance.h */,
+				304587E4238D2092003A0A73 /* TaigaSuspendedEntrance.m */,
+			);
+			path = TaigaSuspendedView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,7 +328,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				304587B3238D132B003A0A73 /* main.m in Sources */,
+				301CACFD238E71A200FBA274 /* TaigaAnimatedTransitioning.m in Sources */,
+				304587DA238D14D4003A0A73 /* DeskViewController.m in Sources */,
+				301CAD00238E72AE00FBA274 /* TaigaInteractiveTransitioning.m in Sources */,
+				304587E2238D1AA2003A0A73 /* TaigaSuspendedView.m in Sources */,
 				304587A5238D1327003A0A73 /* ViewController.m in Sources */,
+				304587E5238D2092003A0A73 /* TaigaSuspendedEntrance.m in Sources */,
 				3045879F238D1327003A0A73 /* AppDelegate.m in Sources */,
 				304587AB238D1327003A0A73 /* DeskCollection.xcdatamodeld in Sources */,
 				304587A2238D1327003A0A73 /* SceneDelegate.m in Sources */,
