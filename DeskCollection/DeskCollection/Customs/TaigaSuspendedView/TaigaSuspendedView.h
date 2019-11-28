@@ -12,12 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TaigaSuspendedView : UIView
 
+@property(nonatomic, nullable, copy) NSArray *gradientColors;
+
 @property (nonatomic, assign, readonly) CGFloat width;
 
+@property (nonatomic, strong, readonly) UIButton *button;
 @property (nonatomic, copy, nullable) void (^actionBlcok)(TaigaSuspendedView *block_sv, int operation);
 
-- (void)addTapGestureRecognizer;
-- (void)removeTapGestureRecognizer;
+//- (void)addTapGestureRecognizer;
+//- (void)removeTapGestureRecognizer;
 
 @end
 

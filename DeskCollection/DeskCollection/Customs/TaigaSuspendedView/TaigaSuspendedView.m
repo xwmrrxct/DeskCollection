@@ -11,15 +11,20 @@
 @interface TaigaSuspendedView ()
 
 @property (nonatomic, strong) CALayer *shadowLayer;
-@property (nonatomic, strong) CALayer *cornerLayer;
+@property (nonatomic, strong) CAGradientLayer *cornerLayer;
 
 //@property (nonatomic, assign) CGFloat width;
+@property (nonatomic, strong) UIButton *button;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 
 
 @end
 
 @implementation TaigaSuspendedView
+
++ (Class)layerClass {
+    return [CAGradientLayer class];
+}
 
 - (instancetype)init
 {
@@ -39,6 +44,9 @@
     [super layoutSubviews];
     
     [self updateShadowLayer];
+    _button.frame = self.bounds;
+    _button.layer.cornerRadius = CGRectGetHeight(_button.frame) / 2.0;
+    _button.layer.masksToBounds = YES;
 }
 
 
@@ -60,7 +68,7 @@
     shadowLayer.frame = CGRectMake(0, 0, size.width - (edgeInset * 2.0), size.height - (edgeInset * 2.0));
     shadowLayer.position = CGPointMake(layer.bounds.size.width / 2.0, layer.bounds.size.height / 2.0);
     shadowLayer.backgroundColor = [UIColor whiteColor].CGColor;
-    shadowLayer.shadowColor = [UIColor colorWithWhite:0.0 alpha:1.0].CGColor;
+    shadowLayer.shadowColor = [UIColor blueColor].CGColor;
     shadowLayer.shadowOpacity = 0.3;
     shadowLayer.shadowOffset = CGSizeMake(0.0, 0.0);
     shadowLayer.shadowRadius = 5.0;
@@ -73,12 +81,12 @@
     
     
     if (!self.cornerLayer) {
-        self.cornerLayer = [CALayer layer];
+        self.cornerLayer = [CAGradientLayer layer];
     }
     CALayer *cornerLayer = self.cornerLayer;
     cornerLayer.frame = layer.bounds;
     
-    cornerLayer.backgroundColor = [UIColor blueColor].CGColor;
+//    cornerLayer.backgroundColor = [UIColor blueColor].CGColor;
     cornerLayer.cornerRadius = CGRectGetWidth(self.frame) / 2.0;
     cornerLayer.masksToBounds = YES;
     
@@ -91,11 +99,55 @@
     return 50.0;
 }
 
+- (UIButton *)button {
+    if (!_button) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        _button = button;
+        button.frame = self.bounds;
+        button.backgroundColor = [UIColor clearColor];
+        [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _button;
+}
+
 - (void)setupView {
+    [self setupGradientLayer];
 //    self.width = 50.0;
-    self.backgroundColor = [UIColor clearColor];
+//    self.backgroundColor = [UIColor clearColor];
+    [self addSubview:self.button];
+}
+
+- (void)setupGradientLayer {
+    if (!self.cornerLayer) {
+        self.cornerLayer = [CAGradientLayer layer];
+    }
+    CAGradientLayer *gradientLayer = (CAGradientLayer *)self.cornerLayer;
     
-    [self addTapGestureRecognizer];
+    if ([_gradientColors isKindOfClass:[NSArray class]] && _gradientColors.count > 0) {
+        [gradientLayer setColors:_gradientColors];
+    }
+    else {
+        UIColor *color1 = [UIColor colorWithRed:99 / 255.0 green:150 / 255.0 blue:245 / 255.0 alpha:1.0];
+        UIColor *color2 = [UIColor colorWithRed:93 / 255.0 green:161 / 255.0 blue:249 / 255.0 alpha:1.0];
+        [gradientLayer setColors:@[(id)[color1 CGColor], (id)[color2 CGColor]]];
+    }
+    
+    [gradientLayer setLocations:@[@0.01, @1]];
+    [gradientLayer setStartPoint:CGPointMake(0, 0)];
+    [gradientLayer setEndPoint:CGPointMake(1, 0)];
+}
+
+- (void)setGradientColors:(NSArray *)gradientColors {
+    _gradientColors = gradientColors;
+    [self.cornerLayer setColors:gradientColors];
+}
+
+- (void)buttonPressed:(UIButton *)sender {
+    if (sender == _button) {
+        if (self.actionBlcok) {
+            self.actionBlcok(self, 0);
+        }
+    }
 }
 
 - (void)addTapGestureRecognizer {

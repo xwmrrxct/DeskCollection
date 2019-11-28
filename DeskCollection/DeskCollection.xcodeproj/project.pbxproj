@@ -22,6 +22,9 @@
 		304587DA238D14D4003A0A73 /* DeskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587D9238D14D4003A0A73 /* DeskViewController.m */; };
 		304587E2238D1AA2003A0A73 /* TaigaSuspendedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587E1238D1AA2003A0A73 /* TaigaSuspendedView.m */; };
 		304587E5238D2092003A0A73 /* TaigaSuspendedEntrance.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587E4238D2092003A0A73 /* TaigaSuspendedEntrance.m */; };
+		3062E8E9238F9AE400D2752F /* TaigaDeskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3062E8E8238F9AE400D2752F /* TaigaDeskView.m */; };
+		3062E8ED238F9DB300D2752F /* DeskCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3062E8EB238F9DB300D2752F /* DeskCollectionCell.m */; };
+		3062E8EE238F9DB300D2752F /* DeskCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3062E8EC238F9DB300D2752F /* DeskCollectionCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +74,11 @@
 		304587E1238D1AA2003A0A73 /* TaigaSuspendedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaigaSuspendedView.m; sourceTree = "<group>"; };
 		304587E3238D2092003A0A73 /* TaigaSuspendedEntrance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaigaSuspendedEntrance.h; sourceTree = "<group>"; };
 		304587E4238D2092003A0A73 /* TaigaSuspendedEntrance.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaigaSuspendedEntrance.m; sourceTree = "<group>"; };
+		3062E8E7238F9AE400D2752F /* TaigaDeskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaigaDeskView.h; sourceTree = "<group>"; };
+		3062E8E8238F9AE400D2752F /* TaigaDeskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaigaDeskView.m; sourceTree = "<group>"; };
+		3062E8EA238F9DB300D2752F /* DeskCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeskCollectionCell.h; sourceTree = "<group>"; };
+		3062E8EB238F9DB300D2752F /* DeskCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeskCollectionCell.m; sourceTree = "<group>"; };
+		3062E8EC238F9DB300D2752F /* DeskCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeskCollectionCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +188,7 @@
 		304587D7238D14B5003A0A73 /* Customs */ = {
 			isa = PBXGroup;
 			children = (
+				3062E8E6238F9AD800D2752F /* TaigaDeskView */,
 				304587DF238D1A96003A0A73 /* TaigaSuspendedView */,
 			);
 			path = Customs;
@@ -195,6 +204,18 @@
 				304587E4238D2092003A0A73 /* TaigaSuspendedEntrance.m */,
 			);
 			path = TaigaSuspendedView;
+			sourceTree = "<group>";
+		};
+		3062E8E6238F9AD800D2752F /* TaigaDeskView */ = {
+			isa = PBXGroup;
+			children = (
+				3062E8E7238F9AE400D2752F /* TaigaDeskView.h */,
+				3062E8E8238F9AE400D2752F /* TaigaDeskView.m */,
+				3062E8EA238F9DB300D2752F /* DeskCollectionCell.h */,
+				3062E8EB238F9DB300D2752F /* DeskCollectionCell.m */,
+				3062E8EC238F9DB300D2752F /* DeskCollectionCell.xib */,
+			);
+			path = TaigaDeskView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,6 +323,7 @@
 			files = (
 				304587B0238D132A003A0A73 /* LaunchScreen.storyboard in Resources */,
 				304587AD238D132A003A0A73 /* Assets.xcassets in Resources */,
+				3062E8EE238F9DB300D2752F /* DeskCollectionCell.xib in Resources */,
 				304587A8238D1327003A0A73 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,8 +352,10 @@
 				304587B3238D132B003A0A73 /* main.m in Sources */,
 				301CACFD238E71A200FBA274 /* TaigaAnimatedTransitioning.m in Sources */,
 				304587DA238D14D4003A0A73 /* DeskViewController.m in Sources */,
+				3062E8E9238F9AE400D2752F /* TaigaDeskView.m in Sources */,
 				301CAD00238E72AE00FBA274 /* TaigaInteractiveTransitioning.m in Sources */,
 				304587E2238D1AA2003A0A73 /* TaigaSuspendedView.m in Sources */,
+				3062E8ED238F9DB300D2752F /* DeskCollectionCell.m in Sources */,
 				304587A5238D1327003A0A73 /* ViewController.m in Sources */,
 				304587E5238D2092003A0A73 /* TaigaSuspendedEntrance.m in Sources */,
 				3045879F238D1327003A0A73 /* AppDelegate.m in Sources */,

@@ -23,10 +23,26 @@
     
     self.title = @"Root";
     
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    [self.navigationController setNavigationBarHidden:YES];
+//    self.automaticallyAdjustsScrollViewInsets = NO;
+//    [self.navigationController setNavigationBarHidden:YES];
     
     [[TaigaSuspendedEntrance sharedInstance] show];
+    
+    UIWindow *window = taigaSuspendedEntrance.window;
+    CGFloat left = 10.0;
+    CGFloat top = 20.0;
+    CGFloat bottom = 0;
+    if (@available(iOS 11.0, *)) {
+        top = window.safeAreaInsets.top;
+        bottom = window.safeAreaInsets.bottom;
+    }
+    
+    CGRect rect = window.bounds;
+    rect.origin.x += left;
+    rect.origin.y += top;
+    rect.size.width -= (left * 2);
+    rect.size.height -= (top + bottom);
+    taigaSuspendedEntrance.activityRect = rect;
     
     __weak typeof(self) weakself = self;
     taigaSuspendedEntrance.suspendedView.actionBlcok = ^(TaigaSuspendedView * _Nonnull block_sv, int operation) {
@@ -40,9 +56,11 @@
     nav.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:nav animated:YES completion:nil];
     
+    
 //    DeskViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"DeskViewController"];
 //    vc.modalPresentationStyle = UIModalPresentationFullScreen;
-//    [self presentViewController:vc animated:YES completion:nil];
+//    self.navigationController.delegate = taigaSuspendedEntrance;
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)showDeskVCWithAnimatedTransitioning {

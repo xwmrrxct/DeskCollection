@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) TaigaSuspendedView *suspendedView;
 
 @property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, assign) CGRect activityRect; // 默认为window的bounds去掉safeAreaInsets
 
 - (void)show;
 

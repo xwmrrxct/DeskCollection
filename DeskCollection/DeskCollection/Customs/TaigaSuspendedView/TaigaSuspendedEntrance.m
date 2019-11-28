@@ -15,6 +15,8 @@ static TaigaSuspendedEntrance *suspended_entrance = nil;
 @property (nonatomic, strong) TaigaAnimatedTransitioning *animatedTransitioning;
 @property (nonatomic, strong) TaigaInteractiveTransitioning *interactiveTransitioning;
 
+@property (nonatomic, strong) UIPanGestureRecognizer *pan;
+
 @end
 
 @implementation TaigaSuspendedEntrance
@@ -52,8 +54,26 @@ static TaigaSuspendedEntrance *suspended_entrance = nil;
     return _interactiveTransitioning;
 }
 
+- (void)setWindow:(UIWindow *)window {
+    _window = window;
+    
+    // bounds - safeAreaInsets的top和bottom
+    CGFloat top = 20.0;
+    CGFloat bottom = 0;
+    if (@available(iOS 11.0, *)) {
+        top = window.safeAreaInsets.top;
+        bottom = window.safeAreaInsets.bottom;
+    }
+    
+    CGRect rect = window.bounds;
+    rect.origin.y += top;
+    rect.size.height -= (top + bottom);
+    self.activityRect = rect;
+}
+
 - (void)initEntrance {
     self.suspendedView = [[TaigaSuspendedView alloc] initWithFrame:CGRectMake(0, 200, 50, 50)];
+    [self addPanGesture];
     
     UIWindow* window = nil;
      
@@ -75,7 +95,102 @@ static TaigaSuspendedEntrance *suspended_entrance = nil;
     [self.window addSubview:self.suspendedView];
 }
 
+- (void)addPanGesture {
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(gestureHandle:)];
+    self.pan = pan;
+    [self.suspendedView addGestureRecognizer:pan];
+}
 
+- (void)gestureHandle:(UIGestureRecognizer *)sender {
+    if (sender == self.pan) {
+        UIPanGestureRecognizer *pan = (UIPanGestureRecognizer *)sender;
+        UIView *targetView = pan.view;
+        switch (pan.state) {
+            case UIGestureRecognizerStateBegan:
+            {
+                
+            }
+                break;
+            case UIGestureRecognizerStateChanged:
+            {
+                CGPoint transition = [pan translationInView:targetView];
+                [pan setTranslation:CGPointZero inView:self];
+                CGRect frame = targetView.frame;
+                
+                CGFloat x = CGRectGetMinX(frame) + transition.x;
+                CGFloat y = CGRectGetMinY(frame) + transition.y;
+                
+                CGRect enableRect = self.window.bounds;
+                CGFloat minX = CGRectGetMinX(enableRect);
+                CGFloat minY = CGRectGetMinY(enableRect);
+                CGFloat maxX = CGRectGetMaxX(enableRect) - CGRectGetWidth(frame);
+                CGFloat maxY = CGRectGetMaxY(enableRect) - CGRectGetHeight(frame);
+                
+                if (x < minX) x = minX;
+                if (x > maxX) x = maxX;
+                if (y < minY) y = minY;
+                if (y > maxY) y = maxY;
+                
+                frame.origin.x = x;
+                frame.origin.y = y;
+                
+                targetView.frame = frame;
+            }
+                break;
+            case UIGestureRecognizerStateFailed:
+            case UIGestureRecognizerStateCancelled:
+            case UIGestureRecognizerStateEnded:
+            {
+                [self adjustSuspendedViewFrame:YES];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
+- (void)adjustSuspendedViewFrame:(BOOL)animated {
+
+    CGRect frame = self.suspendedView.frame;
+    CGFloat x = CGRectGetMinX(frame);
+    CGFloat y = CGRectGetMinY(frame);
+    CGFloat cX = self.suspendedView.center.x;
+    
+    CGRect enableRect = self.activityRect;
+    CGFloat minX = CGRectGetMinX(enableRect);
+    CGFloat minY = CGRectGetMinY(enableRect);
+    CGFloat maxX = CGRectGetMaxX(enableRect) - CGRectGetWidth(frame);
+    CGFloat maxY = CGRectGetMaxY(enableRect) - CGRectGetHeight(frame);
+    CGFloat centerX = CGRectGetWidth(enableRect) / 2.0;
+    
+    // 靠左
+    if (cX < centerX) {
+        x = minX;
+    }
+    // 靠右
+    else {
+        x = maxX;
+    }
+    if (y < minY) y = minY;
+    if (y > maxY) y = maxY;
+
+    frame.origin.x = x;
+    frame.origin.y = y;
+    
+    if (animated) {
+        self.userInteractionEnabled = NO;
+        [UIView animateWithDuration:0.55 delay:0 usingSpringWithDamping:0.78 initialSpringVelocity:0.1 options:kNilOptions animations:^{
+            self.suspendedView.frame = frame;
+        } completion:^(BOOL finished) {
+            self.userInteractionEnabled = YES;
+        }];
+    } else {
+        self.suspendedView.frame = frame;
+        self.userInteractionEnabled = YES;
+    }
+}
 
 #pragma mark -- UIViewControllerTransitioningDelegate
 
@@ -93,11 +208,23 @@ static TaigaSuspendedEntrance *suspended_entrance = nil;
 
 #pragma mark - UINavigationControllerDelegate
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
+    
+    if (operation == UINavigationControllerOperationPush) {
+        self.animatedTransitioning.type = TaigaAnimatedTransitioningTypePush;
+    }
+    else if (operation == UINavigationControllerOperationPop) {
+        self.animatedTransitioning.type = TaigaAnimatedTransitioningTypePop;
+    }
+    
     return self.animatedTransitioning;
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {
-    return self.interactiveTransitioning;
+    //手势开始的时候才需要传入手势过渡代理，如果直接pop或push，应该返回nil，否者无法正常完成pop/push动作
+    if (self.animatedTransitioning.type == UINavigationControllerOperationPop) {
+        return self.interactiveTransitioning.isInteractive ? self.interactiveTransitioning : nil;
+    }
+    return nil;
 }
 
 /*

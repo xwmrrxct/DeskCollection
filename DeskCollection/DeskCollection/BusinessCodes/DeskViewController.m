@@ -9,7 +9,11 @@
 #import "DeskViewController.h"
 #import "TaigaSuspendedEntrance.h"
 
+#import "TaigaDeskView.h"
+
 @interface DeskViewController ()
+
+@property (nonatomic, strong) TaigaDeskView *deskView;
 
 @end
 
@@ -26,10 +30,17 @@
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(barButtonPressed:)];
     
     [self.navigationItem setRightBarButtonItems:@[item]];
+    
+    
+    TaigaDeskView *deskView = [[TaigaDeskView alloc] initWithFrame:self.view.bounds];
+    self.deskView = deskView;
+    [self.view addSubview:deskView];
+    
 }
 
 - (void)barButtonPressed:(UIBarButtonItem *)sender {
     [self dismissVC];
+//    [self popVC];
 }
 
 - (void)dismissVC {
@@ -42,6 +53,10 @@
 //        [self.navigationController removeFromParentViewController];
 //    }];
     
+}
+
+- (void)popVC {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //- (void)removeFromParentViewController
