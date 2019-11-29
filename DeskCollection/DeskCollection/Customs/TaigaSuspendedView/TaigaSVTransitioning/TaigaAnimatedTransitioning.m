@@ -19,6 +19,9 @@
 @implementation TaigaAnimatedTransitioning
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+    if (self.type == TaigaAnimatedTransitioningTypePresent || self.type == TaigaAnimatedTransitioningTypeDismiss) {
+        return .5f;
+    }
     return 0.25;
 }
 

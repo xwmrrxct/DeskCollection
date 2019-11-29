@@ -36,6 +36,28 @@
     self.deskView = deskView;
     [self.view addSubview:deskView];
     
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//    });
+    [self configDataSource];
+}
+
+- (void)configDataSource {
+    NSMutableArray *mArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 20; i++) {
+        FileEntity *entity = [[FileEntity alloc] init];
+        entity.type = FileTypeNormal;
+        entity.state = FileStateNormal;
+        entity.title = [NSString stringWithFormat:@"taiga%i", i];
+        entity.img = @"ymb_img";
+        if (i == 0) {
+            entity.type = FileTypeAdd;
+            entity.img = @"add";
+        }
+        [mArray addObject:entity];
+    }
+    
+    _deskView.dataSource = mArray;
+    [_deskView reloadData];
 }
 
 - (void)barButtonPressed:(UIBarButtonItem *)sender {

@@ -23,8 +23,8 @@
                             <constraint firstAttribute="width" constant="93" id="x37-on-OnB"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wNm-aJ-adh">
-                        <rect key="frame" x="78.5" y="150" width="31.5" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wNm-aJ-adh">
+                        <rect key="frame" x="0.0" y="150" width="188" height="17"/>
                         <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="12"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -33,7 +33,9 @@
             </view>
             <constraints>
                 <constraint firstItem="cmc-zR-TbN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="B2B-tq-ZOC"/>
+                <constraint firstAttribute="trailing" secondItem="wNm-aJ-adh" secondAttribute="trailing" id="G1K-jS-SrL"/>
                 <constraint firstItem="wNm-aJ-adh" firstAttribute="top" secondItem="cmc-zR-TbN" secondAttribute="bottom" constant="10" id="JmT-Zt-FRq"/>
+                <constraint firstItem="wNm-aJ-adh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Udn-Yf-a3b"/>
                 <constraint firstItem="wNm-aJ-adh" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="c4E-fO-xVT"/>
                 <constraint firstItem="cmc-zR-TbN" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="iO9-Rm-dkF"/>
             </constraints>

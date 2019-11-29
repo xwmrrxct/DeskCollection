@@ -7,10 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FileEntity.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TaigaDeskView : UIView
+
+@property (nonatomic, assign) BOOL isEditing;
+@property (nonatomic, assign) BOOL isDragging;
+
+@property (nonatomic, strong) NSMutableArray<FileEntity *> *dataSource;
+
+- (void)reloadData;
 
 @end
 

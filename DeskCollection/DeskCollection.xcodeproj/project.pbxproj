@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		301CACFD238E71A200FBA274 /* TaigaAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 301CACFC238E71A200FBA274 /* TaigaAnimatedTransitioning.m */; };
 		301CAD00238E72AE00FBA274 /* TaigaInteractiveTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 301CACFF238E72AD00FBA274 /* TaigaInteractiveTransitioning.m */; };
+		30209E872390AA2E00B6FA2C /* UIColor+Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 30209E862390AA2E00B6FA2C /* UIColor+Expanded.m */; };
+		30209E8A2390CAF700B6FA2C /* FileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 30209E892390CAF700B6FA2C /* FileEntity.m */; };
 		3045879F238D1327003A0A73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3045879E238D1327003A0A73 /* AppDelegate.m */; };
 		304587A2238D1327003A0A73 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587A1238D1327003A0A73 /* SceneDelegate.m */; };
 		304587A5238D1327003A0A73 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 304587A4238D1327003A0A73 /* ViewController.m */; };
@@ -49,6 +51,11 @@
 		301CACFC238E71A200FBA274 /* TaigaAnimatedTransitioning.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaigaAnimatedTransitioning.m; sourceTree = "<group>"; };
 		301CACFE238E72AD00FBA274 /* TaigaInteractiveTransitioning.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaigaInteractiveTransitioning.h; sourceTree = "<group>"; };
 		301CACFF238E72AD00FBA274 /* TaigaInteractiveTransitioning.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaigaInteractiveTransitioning.m; sourceTree = "<group>"; };
+		30209E812390A99700B6FA2C /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		30209E852390AA2E00B6FA2C /* UIColor+Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Expanded.h"; sourceTree = "<group>"; };
+		30209E862390AA2E00B6FA2C /* UIColor+Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Expanded.m"; sourceTree = "<group>"; };
+		30209E882390CAF700B6FA2C /* FileEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileEntity.h; sourceTree = "<group>"; };
+		30209E892390CAF700B6FA2C /* FileEntity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileEntity.m; sourceTree = "<group>"; };
 		3045879A238D1327003A0A73 /* DeskCollection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeskCollection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3045879D238D1327003A0A73 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3045879E238D1327003A0A73 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -117,6 +124,31 @@
 			path = TaigaSVTransitioning;
 			sourceTree = "<group>";
 		};
+		30209E822390A9EA00B6FA2C /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				30209E832390AA2E00B6FA2C /* Categorys */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		30209E832390AA2E00B6FA2C /* Categorys */ = {
+			isa = PBXGroup;
+			children = (
+				30209E842390AA2E00B6FA2C /* UIColor */,
+			);
+			path = Categorys;
+			sourceTree = "<group>";
+		};
+		30209E842390AA2E00B6FA2C /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				30209E852390AA2E00B6FA2C /* UIColor+Expanded.h */,
+				30209E862390AA2E00B6FA2C /* UIColor+Expanded.m */,
+			);
+			path = UIColor;
+			sourceTree = "<group>";
+		};
 		30458791238D1327003A0A73 = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +178,7 @@
 				304587A1238D1327003A0A73 /* SceneDelegate.m */,
 				304587A3238D1327003A0A73 /* ViewController.h */,
 				304587A4238D1327003A0A73 /* ViewController.m */,
+				30209E822390A9EA00B6FA2C /* Common */,
 				304587D6238D14B5003A0A73 /* BusinessCodes */,
 				304587D7238D14B5003A0A73 /* Customs */,
 				304587A6238D1327003A0A73 /* Main.storyboard */,
@@ -154,6 +187,7 @@
 				304587B1238D132B003A0A73 /* Info.plist */,
 				304587B2238D132B003A0A73 /* main.m */,
 				304587A9238D1327003A0A73 /* DeskCollection.xcdatamodeld */,
+				30209E812390A99700B6FA2C /* PrefixHeader.pch */,
 			);
 			path = DeskCollection;
 			sourceTree = "<group>";
@@ -214,6 +248,8 @@
 				3062E8EA238F9DB300D2752F /* DeskCollectionCell.h */,
 				3062E8EB238F9DB300D2752F /* DeskCollectionCell.m */,
 				3062E8EC238F9DB300D2752F /* DeskCollectionCell.xib */,
+				30209E882390CAF700B6FA2C /* FileEntity.h */,
+				30209E892390CAF700B6FA2C /* FileEntity.m */,
 			);
 			path = TaigaDeskView;
 			sourceTree = "<group>";
@@ -350,6 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				304587B3238D132B003A0A73 /* main.m in Sources */,
+				30209E872390AA2E00B6FA2C /* UIColor+Expanded.m in Sources */,
 				301CACFD238E71A200FBA274 /* TaigaAnimatedTransitioning.m in Sources */,
 				304587DA238D14D4003A0A73 /* DeskViewController.m in Sources */,
 				3062E8E9238F9AE400D2752F /* TaigaDeskView.m in Sources */,
@@ -358,6 +395,7 @@
 				3062E8ED238F9DB300D2752F /* DeskCollectionCell.m in Sources */,
 				304587A5238D1327003A0A73 /* ViewController.m in Sources */,
 				304587E5238D2092003A0A73 /* TaigaSuspendedEntrance.m in Sources */,
+				30209E8A2390CAF700B6FA2C /* FileEntity.m in Sources */,
 				3045879F238D1327003A0A73 /* AppDelegate.m in Sources */,
 				304587AB238D1327003A0A73 /* DeskCollection.xcdatamodeld in Sources */,
 				304587A2238D1327003A0A73 /* SceneDelegate.m in Sources */,
@@ -531,6 +569,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z77W6B9A99;
+				GCC_PREFIX_HEADER = DeskCollection/PrefixHeader.pch;
 				INFOPLIST_FILE = DeskCollection/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -548,6 +587,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z77W6B9A99;
+				GCC_PREFIX_HEADER = DeskCollection/PrefixHeader.pch;
 				INFOPLIST_FILE = DeskCollection/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

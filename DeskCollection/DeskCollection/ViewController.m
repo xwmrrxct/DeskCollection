@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "TaigaSuspendedEntrance.h"
 
 #import "DeskViewController.h"
 
@@ -26,8 +25,6 @@
 //    self.automaticallyAdjustsScrollViewInsets = NO;
 //    [self.navigationController setNavigationBarHidden:YES];
     
-    [[TaigaSuspendedEntrance sharedInstance] show];
-    
     UIWindow *window = taigaSuspendedEntrance.window;
     CGFloat left = 10.0;
     CGFloat top = 20.0;
@@ -43,11 +40,19 @@
     rect.size.width -= (left * 2);
     rect.size.height -= (top + bottom);
     taigaSuspendedEntrance.activityRect = rect;
+    taigaSuspendedEntrance.suspendedView.frame = CGRectMake(left, 200, 50.0, 50.0);
+    
+    UIColor *color1 = [UIColor colorWithRGBHex:0x6396F5];
+    UIColor *color2 = [UIColor colorWithRGBHex:0x5DA1F9];
+    taigaSuspendedEntrance.suspendedView.gradientColors = @[(id)[color1 CGColor], (id)[color2 CGColor]];
+    [taigaSuspendedEntrance.suspendedView.button setImage:[UIImage imageNamed:@"ymb_img"] forState:UIControlStateNormal];
     
     __weak typeof(self) weakself = self;
     taigaSuspendedEntrance.suspendedView.actionBlcok = ^(TaigaSuspendedView * _Nonnull block_sv, int operation) {
         [weakself showDeskVC];
     };
+    
+    [taigaSuspendedEntrance show];
 }
 
 - (void)showDeskVC {

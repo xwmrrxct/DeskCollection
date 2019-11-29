@@ -1,0 +1,41 @@
+//
+//  PrefixHeader.pch
+//  DeskCollection
+//
+//  Created by Taiga on 2019/11/29.
+//  Copyright © 2019 Taiga. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* PrefixHeader_pch */
+
+#import "TaigaSuspendedEntrance.h"
+#import "UIColor+Expanded.h"
+
+
+#define ScreenHeight [[UIScreen mainScreen] bounds].size.height
+#define ScreenWidth [[UIScreen mainScreen] bounds].size.width
+
+
+#define SafeAreaInsetTop(view)\
+({\
+    CGFloat inset = 20;\
+    if (@available(iOS 11.0, *)) {\
+        inset = view.safeAreaInsets.top;\
+    }\
+    (inset);\
+})\
+
+#define SafeAreaInsetBottom(view)\
+({\
+    CGFloat inset = 0;\
+    if (@available(iOS 11.0, *)) {\
+        inset = view.safeAreaInsets.bottom;\
+    }\
+    (inset);\
+})\
