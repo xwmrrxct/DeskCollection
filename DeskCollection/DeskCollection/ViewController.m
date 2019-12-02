@@ -7,10 +7,13 @@
 //
 
 #import "ViewController.h"
+#import "Lottie.h"
 
 #import "DeskViewController.h"
 
 @interface ViewController ()
+
+@property (nonatomic, strong) LOTAnimationView *animationView;
 
 @end
 
@@ -45,7 +48,7 @@
     UIColor *color1 = [UIColor colorWithRGBHex:0x6396F5];
     UIColor *color2 = [UIColor colorWithRGBHex:0x5DA1F9];
     taigaSuspendedEntrance.suspendedView.gradientColors = @[(id)[color1 CGColor], (id)[color2 CGColor]];
-    [taigaSuspendedEntrance.suspendedView.button setImage:[UIImage imageNamed:@"ymb_img"] forState:UIControlStateNormal];
+//    [taigaSuspendedEntrance.suspendedView.button setImage:[UIImage imageNamed:@"ymb_img"] forState:UIControlStateNormal];
     
     __weak typeof(self) weakself = self;
     taigaSuspendedEntrance.suspendedView.actionBlcok = ^(TaigaSuspendedView * _Nonnull block_sv, int operation) {
@@ -53,6 +56,14 @@
     };
     
     [taigaSuspendedEntrance show];
+    
+    
+    self.animationView = [LOTAnimationView animationNamed:@"ym1"];
+    self.animationView.userInteractionEnabled = NO;
+    self.animationView.contentMode = UIViewContentModeScaleAspectFit;
+    self.animationView.frame = CGRectMake(0, 0, 40, 40);
+    self.animationView.center = CGPointMake(CGRectGetWidth(taigaSuspendedEntrance.suspendedView.frame) / 2.0, CGRectGetHeight(taigaSuspendedEntrance.suspendedView.frame) / 2.0);
+    [taigaSuspendedEntrance.suspendedView insertSubview:self.animationView belowSubview:taigaSuspendedEntrance.suspendedView.button];
 }
 
 - (void)showDeskVC {
@@ -87,6 +98,10 @@
         childVC.view.frame = superVC.view.bounds;
     }];
     
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.animationView play];
 }
 
 
