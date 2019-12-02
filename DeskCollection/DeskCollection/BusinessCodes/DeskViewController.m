@@ -19,6 +19,11 @@
 
 @implementation DeskViewController
 
+- (void)dealloc
+{
+    NSLog(@"desk view controller did dealloc.");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

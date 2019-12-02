@@ -31,6 +31,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
 
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPress;
 
 @property (nonatomic, strong) DeskCollectionCell *draggingCell;
 @property (nonatomic, strong) NSIndexPath *draggingIndexPath;
@@ -43,6 +44,11 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
 @end
 
 @implementation TaigaDeskView
+
+- (void)dealloc
+{
+    NSLog(@"taiga desk view did dealloc.");
+}
 
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
@@ -88,6 +94,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
     [collectionView addSubview:self.draggingCell];
     
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(gestureHandle:)];
+    self.longPress = longPress;
     longPress.minimumPressDuration = 0.3f;
     [self.collectionView addGestureRecognizer:longPress];
 }
@@ -161,6 +168,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
 }
 
 - (void)dragChanged:(UILongPressGestureRecognizer *)longPress {
+    if (longPress.state != UIGestureRecognizerStateChanged) return;
     if (!self.draggingIndexPath) return;
     
     CGPoint point = [longPress locationInView:self.collectionView];
@@ -197,12 +205,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
         }];
     }
     else if (self.dragOperation == DragOperationIntoFolder) {
-        DeskCollectionCell *cell = (DeskCollectionCell *)[self.collectionView cellForItemAtIndexPath:self.draggingIndexPath];
-        [cell setHidden:NO];
-        FileEntity *entity = [self.dataSource objectAtIndex:self.draggingIndexPath.row];
-        entity.state = FileStateNormal;
-
-        [self dragDidStop];
+        
     }
     else {
         DeskCollectionCell *cell = (DeskCollectionCell *)[self.collectionView cellForItemAtIndexPath:self.draggingIndexPath];
@@ -219,6 +222,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
 - (DragOperation)dragOperation:(CGPoint)point {
     
     if (!self.draggingIndexPath || !self.targetIndexPath) {
+        self.overlapTime = -1;
         return DragOperationNone;
     }
     DeskCollectionCell *target = (DeskCollectionCell *)[self.collectionView cellForItemAtIndexPath:self.targetIndexPath];
@@ -235,6 +239,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
             self.overlapTime = t;
         }
         else if (t - self.overlapTime > 0.5) {
+            self.overlapTime = -1;
             return DragOperationIntoFolder;
         }
         
@@ -243,7 +248,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
         self.overlapTime = -1;
         return DragOperationMove;
     }
-    
+
     return DragOperationNone;
 }
 
@@ -273,6 +278,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
     FileEntity *f3 = [FileEntity folderEntity];
     f3.files = [[NSMutableArray alloc] init];
     
+    BOOL animated = NO;
     if (f2.type == FileTypeNormal) {
         [f3.files addObject:f1];
         [f3.files addObject:f2];
@@ -280,26 +286,35 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
     else if (f2.type == FileTypeFolder) {
         [f3.files addObject:f1];
         [f3.files addObjectsFromArray:f2.files];
+        animated = YES;
     }
     
-    [self.dataSource replaceObjectAtIndex:self.targetIndexPath.row withObject:f3];
-    [self.collectionView reloadItemsAtIndexPaths:@[self.targetIndexPath]];
-    
-    [self.dataSource removeObject:f1];
-    [self.collectionView deleteItemsAtIndexPaths:@[self.draggingIndexPath]];
-    
-    DeskCollectionCell *target = (DeskCollectionCell *)[self.collectionView cellForItemAtIndexPath:self.targetIndexPath];
-    self.draggingCell.frame = target.frame;
-    self.draggingIndexPath = nil;
-    self.targetIndexPath = nil;
-    
-    self.collectionView.userInteractionEnabled = NO;
-    [UIView animateWithDuration:1.8 animations:^{
-        self.draggingCell.transform = CGAffineTransformMakeScale(0.2, 0.2);
-    } completion:^(BOOL finished) {
+    __weak typeof(self) weakself = self;
+    void (^completion)(BOOL finished) = ^(BOOL finished) {
+        __strong typeof(self) self = weakself;
+        [self.dataSource replaceObjectAtIndex:self.targetIndexPath.row withObject:f3];
+        [self.collectionView reloadItemsAtIndexPaths:@[self.targetIndexPath]];
+
+        [self.dataSource removeObject:f1];
+        [self.collectionView deleteItemsAtIndexPaths:@[self.draggingIndexPath]];
         [self dragDidStop];
         self.collectionView.userInteractionEnabled = YES;
-    }];
+    };
+    
+    self.longPress.state = UIGestureRecognizerStateEnded;
+    self.collectionView.userInteractionEnabled = NO;
+    
+    if (animated) {
+        DeskCollectionCell *target = (DeskCollectionCell *)[self.collectionView cellForItemAtIndexPath:self.targetIndexPath];
+        self.draggingCell.frame = target.frame;
+
+        [UIView animateWithDuration:0.8 animations:^{
+            self.draggingCell.transform = CGAffineTransformMakeScale(0.2, 0.2);
+        } completion:completion];
+    }
+    else {
+        completion(YES);
+    }
 }
 
 - (void)dragDidStop {
@@ -405,6 +420,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
 }
 
 - (void)edgeScroll {
+    [self dragChanged:self.longPress];
     [self determineScrollDirection];
     UIScrollView *scrollView = self.collectionView;
     UIView *draggingView = self.draggingCell;
