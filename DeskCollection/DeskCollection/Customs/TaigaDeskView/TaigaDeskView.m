@@ -72,11 +72,14 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
     [super layoutSubviews];
     
     [self updateCollectionLayout];
+    self.collectionView.frame = self.bounds;
 }
 
 - (void)setupView {
     self.backgroundColor = [UIColor whiteColor];
     self.edgeScrollEnable = YES;
+    self.enableIntoFloder = YES;
+    self.enableDragOutside = NO;
     
     [self updateCollectionLayout];
     
@@ -124,14 +127,6 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
     layout.minimumInteritemSpacing = spaceX;
     layout.minimumLineSpacing = spaceY;
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    
-    DeskCollectionCell *cell = self.draggingCell;
-    if (!cell) {
-        cell = [DeskCollectionCell loadCellFromNib];
-//        DeskCollectionCell *cell = [[DeskCollectionCell alloc] initWithFrame:CGRectMake(0, 0, itemWidth, itemHeight)];
-        self.draggingCell = cell;
-    }
-    cell.frame = CGRectMake(0, 0, itemWidth, itemHeight);
 }
 
 
@@ -172,7 +167,14 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
     if (!self.draggingIndexPath) return;
     
     CGPoint point = [longPress locationInView:self.collectionView];
-    self.draggingCell.center = point;
+    
+    if (self.enableDragOutside) {
+        self.draggingCell.center = [longPress locationInView:self];
+    }
+    else {
+        self.draggingCell.center = point;
+    }
+    
     self.targetIndexPath = [self getTargetIndexPathWithPoint:point];
     
     self.dragOperation = [self dragOperation:point];
@@ -224,6 +226,10 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
     if (!self.draggingIndexPath || !self.targetIndexPath) {
         self.overlapTime = -1;
         return DragOperationNone;
+    }
+    if (!self.enableIntoFloder) {
+        self.overlapTime = -1;
+        return DragOperationMove;
     }
     DeskCollectionCell *target = (DeskCollectionCell *)[self.collectionView cellForItemAtIndexPath:self.targetIndexPath];
     
@@ -374,7 +380,15 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
     [copy updateCellWithParams:cell.entity];
     
     [copy setHidden:YES];
-    [self.collectionView addSubview:copy];
+    if (self.enableDragOutside) {
+        [self addSubview:copy];
+        CGPoint point = [self.longPress locationInView:self];
+        copy.center = point;
+    }
+    else {
+        [self.collectionView addSubview:copy];
+    }
+    
     return copy;
 }
 
@@ -405,25 +419,34 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
     _dragDirection = DragDirectionNone;
     UIScrollView *scrollView = self.collectionView;
     UIView *draggingView = self.draggingCell;
-    if (scrollView.bounds.size.height + scrollView.contentOffset.y - draggingView.center.y < draggingView.bounds.size.height / 2 && scrollView.bounds.size.height + scrollView.contentOffset.y < scrollView.contentSize.height) {
+    CGPoint draggingViewCenter = draggingView.center;
+    if (self.enableDragOutside) {
+        draggingViewCenter = [self.longPress locationInView:self.collectionView];
+    }
+    if (scrollView.bounds.size.height + scrollView.contentOffset.y - draggingViewCenter.y < draggingView.bounds.size.height / 2 && scrollView.bounds.size.height + scrollView.contentOffset.y < scrollView.contentSize.height) {
         _dragDirection = DragDirectionDown;
     }
-    if (draggingView.center.y - scrollView.contentOffset.y < draggingView.bounds.size.height / 2 && scrollView.contentOffset.y > 0) {
+    if (draggingViewCenter.y - scrollView.contentOffset.y < draggingView.bounds.size.height / 2 && scrollView.contentOffset.y > 0) {
         _dragDirection = DragDirectionUp;
     }
-    if (scrollView.bounds.size.width + scrollView.contentOffset.x - draggingView.center.x < draggingView.bounds.size.width / 2 && scrollView.bounds.size.width + scrollView.contentOffset.x < scrollView.contentSize.width) {
+    if (scrollView.bounds.size.width + scrollView.contentOffset.x - draggingViewCenter.x < draggingView.bounds.size.width / 2 && scrollView.bounds.size.width + scrollView.contentOffset.x < scrollView.contentSize.width) {
         _dragDirection = DragDirectionRight;
     }
-    if (draggingView.center.x - scrollView.contentOffset.x < draggingView.bounds.size.width / 2 && scrollView.contentOffset.x > 0) {
+    if (draggingViewCenter.x - scrollView.contentOffset.x < draggingView.bounds.size.width / 2 && scrollView.contentOffset.x > 0) {
         _dragDirection = DragDirectionLeft;
     }
 }
 
 - (void)edgeScroll {
-    [self dragChanged:self.longPress];
+    if (self.enableIntoFloder) {
+        [self dragChanged:self.longPress];
+    }
     [self determineScrollDirection];
     UIScrollView *scrollView = self.collectionView;
     UIView *draggingView = self.draggingCell;
+    if (self.enableDragOutside) {
+        draggingView = nil;
+    }
     CGFloat step = 4;
     switch (_dragDirection) {
         case DragDirectionLeft:{
@@ -485,6 +508,14 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
     }
     else {
         
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(taigaDeskView:operation:indexPath:entity:)]) {
+        [self.delegate taigaDeskView:self operation:TaigaDeskViewOperationItemPressed indexPath:indexPath entity:entity];
+    }
+    
+    if (self.deskViewBlcok) {
+        self.deskViewBlcok(self, TaigaDeskViewOperationItemPressed, indexPath, entity);
     }
 }
 

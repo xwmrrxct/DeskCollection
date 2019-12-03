@@ -61,7 +61,7 @@
     self.animationView = [LOTAnimationView animationNamed:@"ym1"];
     self.animationView.userInteractionEnabled = NO;
     self.animationView.contentMode = UIViewContentModeScaleAspectFit;
-    self.animationView.frame = CGRectMake(0, 0, 40, 40);
+    self.animationView.frame = CGRectMake(0, 0, 35, 35);
     self.animationView.center = CGPointMake(CGRectGetWidth(taigaSuspendedEntrance.suspendedView.frame) / 2.0, CGRectGetHeight(taigaSuspendedEntrance.suspendedView.frame) / 2.0);
     [taigaSuspendedEntrance.suspendedView insertSubview:self.animationView belowSubview:taigaSuspendedEntrance.suspendedView.button];
 }

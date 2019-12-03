@@ -56,9 +56,7 @@
     layer.backgroundColor = [UIColor clearColor].CGColor;
     
     CGSize size = layer.bounds.size;
-    CGFloat inset = -0.0;
     CGFloat edgeInset = 10.0;
-    CGFloat shadowOffset = edgeInset + inset;
     
     
     if (!self.shadowLayer) {
@@ -68,15 +66,13 @@
     shadowLayer.frame = CGRectMake(0, 0, size.width - (edgeInset * 2.0), size.height - (edgeInset * 2.0));
     shadowLayer.position = CGPointMake(layer.bounds.size.width / 2.0, layer.bounds.size.height / 2.0);
     shadowLayer.backgroundColor = [UIColor whiteColor].CGColor;
-    shadowLayer.shadowColor = [UIColor blueColor].CGColor;
+    shadowLayer.shadowColor = [UIColor colorWithRed:93 / 255.0 green:161 / 255.0 blue:249 / 255.0 alpha:1.0].CGColor;
     shadowLayer.shadowOpacity = 0.3;
     shadowLayer.shadowOffset = CGSizeMake(0.0, 0.0);
     shadowLayer.shadowRadius = 5.0;
+
     
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(-shadowOffset, -shadowOffset, CGRectGetWidth(shadowLayer.frame) + (shadowOffset * 2), CGRectGetHeight(shadowLayer.frame) + (shadowOffset * 2))];
-    shadowLayer.shadowPath = path.CGPath;
-    
-    path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(CGRectGetWidth(shadowLayer.frame) / 2.0, CGRectGetHeight(shadowLayer.frame) / 2.0) radius:(size.width / 2.0 + 5.0) startAngle:0 endAngle:2 * M_PI clockwise:NO];
+    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(CGRectGetWidth(shadowLayer.frame) / 2.0, CGRectGetHeight(shadowLayer.frame) / 2.0) radius:(size.width / 2.0 + 5.0) startAngle:0 endAngle:2 * M_PI clockwise:NO];
     shadowLayer.shadowPath = path.CGPath;
     
     
