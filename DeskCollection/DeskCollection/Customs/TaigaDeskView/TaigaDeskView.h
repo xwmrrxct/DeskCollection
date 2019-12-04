@@ -12,6 +12,9 @@
 
 typedef NS_ENUM(int, TaigaDeskViewOperation) {
     TaigaDeskViewOperationItemPressed   = 0,
+    TaigaDeskViewOperationMoveItem,
+    TaigaDeskViewOperationIntoFolder,
+    TaigaDeskViewOperationDragOutside,
 };
 
 @class TaigaDeskView;

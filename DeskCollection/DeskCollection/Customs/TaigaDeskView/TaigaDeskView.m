@@ -13,6 +13,7 @@ typedef NS_ENUM(NSInteger, DragOperation) {
     DragOperationNone   = 0,
     DragOperationMove,        // 移动
     DragOperationIntoFolder,      // 拖入文件夹
+    DragOperationDragOutside,      // 拖出文件夹
     DragOperationCancel,
 };
 
@@ -185,6 +186,9 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
         [self intoFolder];
         [self dragEnded:longPress];
     }
+    else if (self.dragOperation == DragOperationDragOutside) {
+        [self dragOutside];
+    }
 }
 
 - (void)dragEnded:(UILongPressGestureRecognizer *)longPress {
@@ -222,7 +226,13 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
 
 #pragma mark - private methods
 - (DragOperation)dragOperation:(CGPoint)point {
-    
+    if (self.enableDragOutside) {
+        BOOL intersects = CGRectIntersectsRect(self.draggingCell.frame, self.bounds);
+        if (!intersects) {
+            self.overlapTime = -1;
+            return DragOperationDragOutside;
+        }
+    }
     if (!self.draggingIndexPath || !self.targetIndexPath) {
         self.overlapTime = -1;
         return DragOperationNone;
@@ -323,12 +333,37 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
     }
 }
 
+- (void)dragOutside {
+    [self callDelegateMethod:TaigaDeskViewOperationDragOutside indexPath:self.draggingIndexPath];
+    
+    self.longPress.state = UIGestureRecognizerStateEnded;
+    
+    FileEntity *f1 = [self.dataSource objectAtIndex:self.draggingIndexPath.row];
+    [self.dataSource removeObject:f1];
+    [self.collectionView deleteItemsAtIndexPaths:@[self.draggingIndexPath]];
+    
+    [self dragDidStop];
+//    [self dragEnded:self.longPress];
+}
+
 - (void)dragDidStop {
     [self.draggingCell setHidden:YES];
     [self.draggingCell removeFromSuperview];
     
     self.draggingIndexPath = nil;
     self.targetIndexPath = nil;
+}
+
+- (void)callDelegateMethod:(TaigaDeskViewOperation)operation indexPath:(NSIndexPath *)indexPath {
+    FileEntity *entity = self.dataSource[indexPath.row];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(taigaDeskView:operation:indexPath:entity:)]) {
+        [self.delegate taigaDeskView:self operation:operation indexPath:indexPath entity:entity];
+    }
+    
+    if (self.deskViewBlcok) {
+        self.deskViewBlcok(self, operation, indexPath, entity);
+    }
 }
 
 
@@ -510,13 +545,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
         
     }
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(taigaDeskView:operation:indexPath:entity:)]) {
-        [self.delegate taigaDeskView:self operation:TaigaDeskViewOperationItemPressed indexPath:indexPath entity:entity];
-    }
-    
-    if (self.deskViewBlcok) {
-        self.deskViewBlcok(self, TaigaDeskViewOperationItemPressed, indexPath, entity);
-    }
+    [self callDelegateMethod:TaigaDeskViewOperationItemPressed indexPath:indexPath];
 }
 
 /*
