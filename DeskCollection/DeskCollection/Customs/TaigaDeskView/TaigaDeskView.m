@@ -79,7 +79,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
 - (void)setupView {
     self.backgroundColor = [UIColor whiteColor];
     self.edgeScrollEnable = YES;
-    self.enableIntoFloder = YES;
+    self.enableIntoFolder = YES;
     self.enableDragOutside = NO;
     
     [self updateCollectionLayout];
@@ -237,7 +237,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
         self.overlapTime = -1;
         return DragOperationNone;
     }
-    if (!self.enableIntoFloder) {
+    if (!self.enableIntoFolder) {
         self.overlapTime = -1;
         return DragOperationMove;
     }
@@ -487,7 +487,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
 }
 
 - (void)edgeScroll {
-    if (self.enableIntoFloder) {
+    if (self.enableIntoFolder) {
         [self dragChanged:self.longPress];
     }
     [self determineScrollDirection];

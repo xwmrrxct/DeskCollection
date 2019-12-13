@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 //@property (nonatomic, assign) BOOL isEditing;
 @property (nonatomic, assign) BOOL isDragging;
 
-@property (nonatomic, assign) BOOL enableIntoFloder;    // 默认YES
+@property (nonatomic, assign) BOOL enableIntoFolder;    // 默认YES
 @property (nonatomic, assign) BOOL enableDragOutside;   // 默认NO
 
 @property (nonatomic, strong) NSMutableArray<FileEntity *> *dataSource;
