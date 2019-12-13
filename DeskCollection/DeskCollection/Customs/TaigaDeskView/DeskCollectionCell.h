@@ -11,19 +11,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger, DeskCollectionCellType) {
-    DeskCollectionCellTypeFile  = 0,        // 文件
-    DeskCollectionCellTypeFold,         // 文件夹
-};
+//typedef NS_ENUM(NSInteger, DeskCollectionCellType) {
+//    DeskCollectionCellTypeFile  = 0,        // 文件
+//    DeskCollectionCellTypeFold,         // 文件夹
+//};
 
 typedef NS_ENUM(NSInteger, DeskCollectionCellState) {
     DeskCollectionCellStateNormal   = 0,
-    DeskCollectionCellStateDragging,
+    DeskCollectionCellStateEditing,
 };
 
 @interface DeskCollectionCell : UICollectionViewCell
 
-@property (nonatomic, assign) DeskCollectionCellType type;
+//@property (nonatomic, assign) DeskCollectionCellType type;
 @property (nonatomic, assign) DeskCollectionCellState state;
 
 

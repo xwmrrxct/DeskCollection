@@ -23,8 +23,8 @@ typedef NS_ENUM(int, TaigaDeskViewOperation) {
 @optional
 - (void)taigaDeskView:(TaigaDeskView *)deskView
             operation:(TaigaDeskViewOperation)operation
-            indexPath:(NSIndexPath *)indexPath
-               entity:(FileEntity *)entity;
+           indexPaths:(NSArray<NSIndexPath *> *)indexPaths
+             entities:(NSArray<FileEntity *> *)entities;
 
 @end
 
@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray<FileEntity *> *dataSource;
 
 - (void)reloadData;
-@property (nonatomic, copy, nullable) void (^deskViewBlcok)(TaigaDeskView *block_deskView, TaigaDeskViewOperation operation, NSIndexPath *indexPath, FileEntity *entity);
+@property (nonatomic, copy, nullable) void (^deskViewBlcok)(TaigaDeskView *block_deskView, TaigaDeskViewOperation operation, NSArray<NSIndexPath *> *indexPaths, NSArray<FileEntity *> *entities);
 @property (nonatomic, weak) id<TaigaDeskViewDelegate> delegate;
 
 @end

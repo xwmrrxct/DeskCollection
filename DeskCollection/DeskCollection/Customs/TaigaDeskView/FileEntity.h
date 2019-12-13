@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)canMove;
 
 @property (nonatomic, strong) NSString *img;
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *name;
 
 // FileTypeFolder 文件夹下的文件列表
 @property (nonatomic, strong) NSMutableArray<FileEntity *> *files;

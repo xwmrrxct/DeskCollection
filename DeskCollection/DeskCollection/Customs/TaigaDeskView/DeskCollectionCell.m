@@ -31,13 +31,13 @@
     }
     
     self.imageView.image = [UIImage imageNamed:entity.img];
-    self.titleLabel.text = entity.title;
+    self.titleLabel.text = entity.name;
     
     if (entity.type == FileTypeAdd) {
         self.titleLabel.text = @"";
     }
     else if (entity.type == FileTypeFolder) {
-        self.titleLabel.text = [[entity.files valueForKey:@"title"] componentsJoinedByString:@", "];
+        self.titleLabel.text = [[entity.files valueForKey:@"name"] componentsJoinedByString:@", "];
     }
     
     switch (entity.state) {

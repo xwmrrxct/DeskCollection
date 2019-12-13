@@ -53,7 +53,7 @@
         FileEntity *entity = [[FileEntity alloc] init];
         entity.type = FileTypeNormal;
         entity.state = FileStateNormal;
-        entity.title = [NSString stringWithFormat:@"taiga%i", i];
+        entity.name = [NSString stringWithFormat:@"taiga%i", i];
         entity.img = @"ymb_img";
         if (i == 0) {
             entity.type = FileTypeAdd;

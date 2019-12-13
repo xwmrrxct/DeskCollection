@@ -279,6 +279,8 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
 
     [self.collectionView moveItemAtIndexPath:self.draggingIndexPath toIndexPath:self.targetIndexPath];
     self.draggingIndexPath = self.targetIndexPath;
+    
+    [self callDelegateMethod:TaigaDeskViewOperationMoveItem indexPath:self.draggingIndexPath];
 }
  
 - (void)intoFolder {
@@ -313,6 +315,9 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
 
         [self.dataSource removeObject:f1];
         [self.collectionView deleteItemsAtIndexPaths:@[self.draggingIndexPath]];
+        
+        [self callDelegateMethod:TaigaDeskViewOperationIntoFolder indexPaths:@[self.draggingIndexPath, self.targetIndexPath] entities:@[f1, f2, f3]];
+        
         [self dragDidStop];
         self.collectionView.userInteractionEnabled = YES;
     };
@@ -355,15 +360,24 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
 }
 
 - (void)callDelegateMethod:(TaigaDeskViewOperation)operation indexPath:(NSIndexPath *)indexPath {
-    FileEntity *entity = self.dataSource[indexPath.row];
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(taigaDeskView:operation:indexPath:entity:)]) {
-        [self.delegate taigaDeskView:self operation:operation indexPath:indexPath entity:entity];
+    FileEntity *entity = nil;
+    if (indexPath.row < self.dataSource.count && indexPath.row >= 0) {
+        entity = self.dataSource[indexPath.row];
     }
-    
-    if (self.deskViewBlcok) {
-        self.deskViewBlcok(self, operation, indexPath, entity);
-    }
+    [self callDelegateMethod:operation indexPaths:@[indexPath] entities:@[entity]];
+}
+
+- (void)callDelegateMethod:(TaigaDeskViewOperation)operation
+                indexPaths:(NSArray<NSIndexPath *> *)indexPaths
+                  entities:(NSArray<FileEntity *> *)entities {
+                       
+   if (self.delegate && [self.delegate respondsToSelector:@selector(taigaDeskView:operation:indexPaths:entities:)]) {
+       [self.delegate taigaDeskView:self operation:operation indexPaths:indexPaths entities:(NSArray<FileEntity *> *)entities];
+   }
+   
+   if (self.deskViewBlcok) {
+       self.deskViewBlcok(self, operation, indexPaths, entities);
+   }
 }
 
 
@@ -537,7 +551,7 @@ typedef NS_ENUM(NSUInteger, DragDirection) {
     if (entity.type == FileTypeAdd) {
         static int i = 0;
         FileEntity *e = [FileEntity fileEntity];
-        e.title = [NSString stringWithFormat:@"taiga_add%i", ++i];
+        e.name = [NSString stringWithFormat:@"taiga_add%i", ++i];
         [self.dataSource addObject:e];
         [self reloadData];
     }

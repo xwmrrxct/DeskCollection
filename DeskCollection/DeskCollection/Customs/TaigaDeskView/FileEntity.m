@@ -18,7 +18,7 @@
     FileEntity *e = [[FileEntity alloc] init];
     e.type = FileTypeNormal;
     e.state = FileStateNormal;
-    e.title = @"taiga";
+    e.name = @"taiga";
     e.img = @"ymb_img";
     
     return e;
